@@ -1,28 +1,21 @@
 import pandas as pd
 import numpy as np
+
 import matplotlib.pyplot as plt
 
-class LinearRegression:
-    def __init__(self, learning_rate=0.01, iterations=1000):
-        self.learning_rate = learning_rate
-        self.iterations = iterations
-        self.weights = None
-        self.bias = None
+def linear_regression_numpy(X, y, learning_rate=0.01, iterations=1000):
+    n_samples, n_features = X.shape
+    weights = np.zeros(n_features)
+    bias = 0
 
-    def fit(self, X, y):
-        n_samples, n_features = X.shape
-        self.weights = np.zeros(n_features)
-        self.bias = 0
+    for _ in range(iterations):
+        y_predicted = np.dot(X, weights) + bias
+        dw = (1 / n_samples) * np.dot(X.T, (y_predicted - y))
+        db = (1 / n_samples) * np.sum(y_predicted - y)
+        weights -= learning_rate * dw
+        bias -= learning_rate * db
 
-        for _ in range(self.iterations):
-            y_predicted = np.dot(X, self.weights) + self.bias
-            dw = (1 / n_samples) * np.dot(X.T, (y_predicted - y))
-            db = (1 / n_samples) * np.sum(y_predicted - y)
-            self.weights -= self.learning_rate * dw
-            self.bias -= self.learning_rate * db
-
-    def predict(self, X):
-        return np.dot(X, self.weights) + self.bias
+    return weights, bias
 
 def preprocess_data(df):
     # Convert categorical variables to numerical using one-hot encoding
@@ -61,7 +54,7 @@ X_train, X_test = X[:split_index], X[split_index:]
 y_train, y_test = y[:split_index], y[split_index:]
 
 # Create and train the linear regression model
-model = LinearRegression()
+model = linear_regression_numpy(X_train, y_train)
 model.fit(X_train, y_train)
 
 # Make predictions on the test set
