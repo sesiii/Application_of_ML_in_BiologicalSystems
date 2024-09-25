@@ -55,9 +55,9 @@ This project demonstrates the application of logistic regression in predicting h
 This project is licensed under the MIT License.  
 
 #### Logistic Model Results:
-Train Accuracy: 85.27%
-Test Accuracy: 84.59%
-Precision: 100%
+Train Accuracy: 85.344513
+Test Accuracy: 84.699454
+Precision: 100
 Confusion Matrix:
-[[768   5]
+[[769   4]
  [136   6]]
