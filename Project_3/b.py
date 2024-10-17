@@ -20,7 +20,7 @@ Y = data['Status'].values
 # Split data into training and test sets
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
 
-# Implement the decision tree using the provided DecisionTreeClassifier class
+# Define the TreeNode class for the decision tree
 class TreeNode:
     def __init__(self, data, output):
         self.data = data
@@ -31,10 +31,12 @@ class TreeNode:
     def add_child(self, feature_value, obj):
         self.children[feature_value] = obj
 
+# Define the DecisionTreeClassifier class
 class DecisionTreeClassifier:
     def __init__(self):
         self.__root = None
 
+    # Count unique values in Y
     def __count_unique(self, Y):
         d = {}
         for i in Y:
@@ -44,6 +46,7 @@ class DecisionTreeClassifier:
                 d[i] += 1
         return d
 
+    # Calculate Gini index for Y
     def __gini_index(self, Y):
         freq_map = self.__count_unique(Y)
         gini_index_ = 1
@@ -53,6 +56,7 @@ class DecisionTreeClassifier:
             gini_index_ -= p ** 2
         return gini_index_
 
+    # Calculate Gini gain for a selected feature
     def __gini_gain(self, X, Y, selected_feature):
         gini_orig = self.__gini_index(Y)
         gini_split_f = 0
@@ -67,6 +71,7 @@ class DecisionTreeClassifier:
         gini_gain_ = gini_orig - gini_split_f
         return gini_gain_
 
+    # Build the decision tree recursively
     def __decision_tree(self, X, Y, features, level, metric, classes, max_depth):
         if len(set(Y)) == 1 or len(features) == 0 or level == max_depth: 
             # Base cases (leaf node conditions)
@@ -82,6 +87,7 @@ class DecisionTreeClassifier:
                         max_count = freq_map[i]
             return TreeNode(None, output)
         
+        # Find the best feature to split on
         max_gain = -math.inf
         final_feature = None
         for f in features:
@@ -90,6 +96,7 @@ class DecisionTreeClassifier:
                 max_gain = current_gain
                 final_feature = f
 
+        # Create a new tree node with the best feature
         unique_values = set(X[:, final_feature])
         df = pd.DataFrame(X)
         df[df.shape[1]] = Y
@@ -103,6 +110,7 @@ class DecisionTreeClassifier:
         features.insert(index, final_feature)
         return current_node
 
+    # Fit the decision tree model
     def fit(self, X, Y, metric="gini_index", max_depth=2): # Set max_depth here
         features = [i for i in range(len(X[0]))]
         classes = set(Y)
@@ -111,6 +119,7 @@ class DecisionTreeClassifier:
                 metric = "gini_index" # Default to Gini index
         self.__root = self.__decision_tree(X, Y, features, level, metric, classes, max_depth)
 
+    # Predict the class for a single data point
     def __predict_for(self, data, node):
         if len(node.children) == 0:
             return node.output  # Return the 'Status' string
@@ -119,12 +128,14 @@ class DecisionTreeClassifier:
             return node.output
         return self.__predict_for(data, node.children[val])
 
+    # Predict the classes for a dataset
     def predict(self, X):
         Y = np.array([0 for i in range(len(X))])
         for i in range(len(X)):
             Y[i] = self.__predict_for(X[i], self.__root)
         return Y
 
+    # Calculate the accuracy of the model
     def score(self, X, Y):
         Y_pred = self.predict(X)
         count = 0
@@ -137,7 +148,6 @@ class DecisionTreeClassifier:
 # Fit the model using the Gini index criterion and max_depth=2
 clf = DecisionTreeClassifier()
 clf.fit(X_train, Y_train, metric='gini_index', max_depth=2)  # Limit to two levels
-# clf = DecisionTreeClassifier()
 
 # Lists to store accuracy and loss for each epoch
 train_accuracies = []
@@ -161,7 +171,6 @@ for epoch in range(1, 21):
     val_accuracies.append(val_accuracy)
     val_losses.append(val_loss)
 
-
 # Plot accuracy and loss curves
 plt.figure(figsize=(12, 5))
 
@@ -183,6 +192,7 @@ plt.legend()
 
 plt.tight_layout()
 plt.show()
+
 # Predict and evaluate the model
 Y_pred = clf.predict(X_test)
 print("Accuracy:", clf.score(X_test, Y_test))  # Print accuracy only
