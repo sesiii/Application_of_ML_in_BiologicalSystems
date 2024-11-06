@@ -1,4 +1,0 @@
-create a virtual environment;
-python3 -m venv myenv
-source myenv/bin/activate
-pip install tensorflow numpy pandas scikit-learn pydotplus
