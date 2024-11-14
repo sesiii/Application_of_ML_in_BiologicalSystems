@@ -1,0 +1,121 @@
+         id diagnosis  ...  symmetry_worst  fractal_dimension_worst
+0    842302         M  ...          0.4601                  0.11890
+1    842517         M  ...          0.2750                  0.08902
+2  84300903         M  ...          0.3613                  0.08758
+3  84348301         M  ...          0.6638                  0.17300
+4  84358402         M  ...          0.2364                  0.07678
+
+[5 rows x 32 columns]
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 569 entries, 0 to 568
+Data columns (total 32 columns):
+ #   Column                   Non-Null Count  Dtype  
+---  ------                   --------------  -----  
+ 0   id                       569 non-null    int64  
+ 1   diagnosis                569 non-null    object 
+ 2   radius_mean              569 non-null    float64
+ 3   texture_mean             569 non-null    float64
+ 4   perimeter_mean           569 non-null    float64
+ 5   area_mean                569 non-null    float64
+ 6   smoothness_mean          569 non-null    float64
+ 7   compactness_mean         569 non-null    float64
+ 8   concavity_mean           569 non-null    float64
+ 9   concave points_mean      569 non-null    float64
+ 10  symmetry_mean            569 non-null    float64
+ 11  fractal_dimension_mean   569 non-null    float64
+ 12  radius_se                569 non-null    float64
+ 13  texture_se               569 non-null    float64
+ 14  perimeter_se             569 non-null    float64
+ 15  area_se                  569 non-null    float64
+ 16  smoothness_se            569 non-null    float64
+ 17  compactness_se           569 non-null    float64
+ 18  concavity_se             569 non-null    float64
+ 19  concave points_se        569 non-null    float64
+ 20  symmetry_se              569 non-null    float64
+ 21  fractal_dimension_se     569 non-null    float64
+ 22  radius_worst             569 non-null    float64
+ 23  texture_worst            569 non-null    float64
+ 24  perimeter_worst          569 non-null    float64
+ 25  area_worst               569 non-null    float64
+ 26  smoothness_worst         569 non-null    float64
+ 27  compactness_worst        569 non-null    float64
+ 28  concavity_worst          569 non-null    float64
+ 29  concave points_worst     569 non-null    float64
+ 30  symmetry_worst           569 non-null    float64
+ 31  fractal_dimension_worst  569 non-null    float64
+dtypes: float64(30), int64(1), object(1)
+memory usage: 142.4+ KB
+None
+                 id  radius_mean  ...  symmetry_worst  fractal_dimension_worst
+count  5.690000e+02   569.000000  ...      569.000000               569.000000
+mean   3.037183e+07    14.127292  ...        0.290076                 0.083946
+std    1.250206e+08     3.524049  ...        0.061867                 0.018061
+min    8.670000e+03     6.981000  ...        0.156500                 0.055040
+25%    8.692180e+05    11.700000  ...        0.250400                 0.071460
+50%    9.060240e+05    13.370000  ...        0.282200                 0.080040
+75%    8.813129e+06    15.780000  ...        0.317900                 0.092080
+max    9.113205e+08    28.110000  ...        0.663800                 0.207500
+
+[8 rows x 31 columns]
+SVM with linear kernel accuracy: 0.956140350877193
+              precision    recall  f1-score   support
+
+           0       0.97      0.96      0.96        71
+           1       0.93      0.95      0.94        43
+
+    accuracy                           0.96       114
+   macro avg       0.95      0.96      0.95       114
+weighted avg       0.96      0.96      0.96       114
+
+SVM with poly kernel accuracy: 0.868421052631579
+              precision    recall  f1-score   support
+
+           0       0.83      1.00      0.90        71
+           1       1.00      0.65      0.79        43
+
+    accuracy                           0.87       114
+   macro avg       0.91      0.83      0.85       114
+weighted avg       0.89      0.87      0.86       114
+
+SVM with rbf kernel accuracy: 0.9824561403508771
+              precision    recall  f1-score   support
+
+           0       0.97      1.00      0.99        71
+           1       1.00      0.95      0.98        43
+
+    accuracy                           0.98       114
+   macro avg       0.99      0.98      0.98       114
+weighted avg       0.98      0.98      0.98       114
+
+Random Forest accuracy: 0.9649122807017544
+              precision    recall  f1-score   support
+
+           0       0.96      0.99      0.97        71
+           1       0.98      0.93      0.95        43
+
+    accuracy                           0.96       114
+   macro avg       0.97      0.96      0.96       114
+weighted avg       0.97      0.96      0.96       114
+
+Best parameters found: {'activation': 'relu', 'alpha': 0.0001, 'hidden_layer_sizes': (50,), 'learning_rate': 'constant', 'solver': 'sgd'}
+Neural Network accuracy: 0.9649122807017544
+              precision    recall  f1-score   support
+
+           0       0.97      0.97      0.97        71
+           1       0.95      0.95      0.95        43
+
+    accuracy                           0.96       114
+   macro avg       0.96      0.96      0.96       114
+weighted avg       0.96      0.96      0.96       114
+
+Model Comparison:
+SVM_linear: 0.956140350877193
+SVM_poly: 0.868421052631579
+SVM_rbf: 0.9824561403508771
+Random Forest: 0.9649122807017544
+Neural Network: 0.9649122807017544
+
+
+
+
+The best-performing model is: SVM_rbf
